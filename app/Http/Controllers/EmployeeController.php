@@ -37,4 +37,10 @@ class EmployeeController extends Controller
 
         return view('employee')->with('employee', $employee);
     }
+
+    public function display()
+    {
+        $employees = Employee::all();
+        return view('employeeview')->with('employees', $employees);
+    }
 }

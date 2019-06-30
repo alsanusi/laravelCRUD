@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::get('/employee', 'EmployeeController@index');
 
 Route::post('/addimage', 'EmployeeController@store')->name('addimage');
+
+Route::get('/viewdata', 'EmployeeController@display');
