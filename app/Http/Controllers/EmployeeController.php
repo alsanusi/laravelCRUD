@@ -43,4 +43,33 @@ class EmployeeController extends Controller
         $employees = Employee::all();
         return view('employeeview')->with('employees', $employees);
     }
+
+    public function edit($id)
+    {
+        $employees = Employee::find($id);
+        return view('employeeedit')->with('employees', $employees);
+
+    }
+
+    public function update(Request $request, $id)
+    {
+        $employees = Employee::find($id);
+
+        $employees->name = $request->input('name');
+        $employees->email = $request->input('email');
+        $employees->post = $request->input('post');
+        //
+        if($request->hasFile('image'))
+        {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); //Getting Image Extension
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/employee/', $filename);
+            $employees->image = $filename;
+        }
+
+        $employees->save();
+
+        return view('employee')->with('employees', $employees);
+    }
 }
