@@ -26,6 +26,7 @@
                         <th scope="col">Post</th>
                         <th scope="col">Image</th>
                         <th scope="col">Edit Data</th>
+                        <th scope="col">Delet Data</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +37,8 @@
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->post }}</td>
                         <td><img src="{{ asset('uploads/employee/' . $item->image) }}" width="100px" height="100px" alt="img"></td>
-                        <td><a href="/editdata/{{ $item->id }}" class="btn btn-danger"> Edit Data</a></td>
+                        <td><a href="/editdata/{{ $item->id }}" class="btn btn-info"> Edit Data</a></td>
+                        <td><a href="/deletedata/{{ $item->id }}" class="btn btn-danger"> Delete Data</a></td>
                     </tr>
                     @endforeach
                 </tbody>

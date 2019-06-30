@@ -25,3 +25,5 @@ Route::get('/editdata/{id}', 'EmployeeController@edit');
 
 Route::put('/updateimage/{id}', 'EmployeeController@update');
 
+Route::get('/deletedata/{id}', 'EmployeeController@delete');
+

@@ -72,4 +72,11 @@ class EmployeeController extends Controller
 
         return view('employee')->with('employees', $employees);
     }
+
+    public function delete($id)
+    {
+        $employees = Employee::find($id);
+        $employees->delete();
+        return view('employee')->with('employees', $employees);
+    }
 }
