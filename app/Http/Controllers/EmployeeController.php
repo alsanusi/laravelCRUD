@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Storage;
 use App\Employee;
+use File;
 
 class EmployeeController extends Controller
 {
@@ -42,13 +44,16 @@ class EmployeeController extends Controller
     {
         $employees = Employee::all();
         return view('employeeview')->with('employees', $employees);
+        // $path = '/uploads/employee/';
+        // $files =  Storage::files($path);
+        // return $files;
     }
 
     public function edit($id)
     {
         $employees = Employee::find($id);
+        echo $employees_img = $employees->image;
         return view('employeeedit')->with('employees', $employees);
-
     }
 
     public function update(Request $request, $id)
@@ -76,7 +81,12 @@ class EmployeeController extends Controller
     public function delete($id)
     {
         $employees = Employee::find($id);
-        $employees->delete();
+        $employees_img = $employees->image;
+        $file_path = public_path("uploads/employee/".$employees_img); 
+        if(File::exists($file_path)){
+            File::delete($file_path);
+            $employees->delete();
+        }
         return view('employee')->with('employees', $employees);
     }
 }
