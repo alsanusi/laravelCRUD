@@ -52,13 +52,15 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employees = Employee::find($id);
-        echo $employees_img = $employees->image;
+        // echo $employees_img = $employees->image;
         return view('employeeedit')->with('employees', $employees);
     }
 
     public function update(Request $request, $id)
     {
         $employees = Employee::find($id);
+        $employees_img = $employees->image;
+        $file_path = public_path("uploads/employee/".$employees_img);
 
         $employees->name = $request->input('name');
         $employees->email = $request->input('email');
@@ -66,11 +68,15 @@ class EmployeeController extends Controller
         //
         if($request->hasFile('image'))
         {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension(); //Getting Image Extension
-            $filename = time() . '.' . $extension;
-            $file->move('uploads/employee/', $filename);
-            $employees->image = $filename;
+            if(File::exists($file_path))
+            {
+                File::delete($file_path);
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension(); //Getting Image Extension
+                $filename = time() . '.' . $extension;
+                $file->move('uploads/employee/', $filename);
+                $employees->image = $filename;
+            }
         }
 
         $employees->save();
